@@ -1,6 +1,65 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    try {
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/auth/register`;
+
+      console.log("API URL:", apiUrl);
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const text = await response.text();
+
+      console.log("Status:", response.status);
+      console.log("Response:", text);
+
+      if (response.ok) {
+        alert("Registration Successful");
+
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+        });
+      } else {
+        alert(text || "Registration Failed");
+      }
+    } catch (error) {
+      console.error("Registration Error:", error);
+      alert("Unable to connect to server");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="auth-page">
       <section className="auth-card">
@@ -17,18 +76,24 @@ const Register = () => {
 
         <div className="auth-visual">
           <img
-            src="../src/assets/images/png/dasher-ui-bootstrap-5.jpg"
+            src="/images/dasher-ui-bootstrap-5.jpg"
             alt="adminHMD dashboard interface"
           />
         </div>
 
-        <form className="needs-validation" noValidate>
+        <form
+          className="needs-validation"
+          noValidate
+          onSubmit={handleSubmit}
+        >
           <div className="mb-4">
             <p className="eyebrow mb-1">Secure Access</p>
 
             <h1 className="h3 mb-1">Register</h1>
 
-            <p className="text-muted mb-0">Create your adminHMD account.</p>
+            <p className="text-muted mb-0">
+              Create your adminHMD account.
+            </p>
           </div>
 
           <div className="mb-3">
@@ -40,10 +105,15 @@ const Register = () => {
               className="form-control"
               id="registerName"
               type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               required
             />
 
-            <div className="invalid-feedback">Full name is required.</div>
+            <div className="invalid-feedback">
+              Full name is required.
+            </div>
           </div>
 
           <div className="mb-3">
@@ -55,10 +125,15 @@ const Register = () => {
               className="form-control"
               id="registerEmail"
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               required
             />
 
-            <div className="invalid-feedback">Enter a valid email.</div>
+            <div className="invalid-feedback">
+              Enter a valid email.
+            </div>
           </div>
 
           <div className="mb-3">
@@ -70,7 +145,10 @@ const Register = () => {
               className="form-control"
               id="registerPassword"
               type="password"
-              minLength="6"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              minLength={6}
               required
             />
 
@@ -96,9 +174,16 @@ const Register = () => {
             </div>
           </div>
 
-          <button className="btn btn-primary w-100" type="submit">
-            <i className="bi bi-person-plus" aria-hidden="true"></i> Create
-            Account
+          <button
+            className="btn btn-primary w-100"
+            type="submit"
+            disabled={loading}
+          >
+            <i
+              className="bi bi-person-plus"
+              aria-hidden="true"
+            ></i>{" "}
+            {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
 
