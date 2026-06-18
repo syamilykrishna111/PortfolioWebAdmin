@@ -1,25 +1,17 @@
-import BlogPageTitle from "@/components/default/blog/BlogPageTitle";
-// import AboutSection from "@/components/about/AboutSection";
-// import StatsSection from "@/components/about/StatsSection";
-// import SkillsSection from "@/components/about/SkillsSection";
-// import InterestsSection from "@/components/about/InterestsSection";
-// import TestimonialsSection from "@/components/about/TestimonialsSection";
 import Header from "@/components/default/Header";
 import Footer from "@/components/default/Footer";
 import ScrollTop from "@/components/default/ScrollTop";
+import BlogSection from "@/components/default/blog/BlogSection";
+import BlogPageTitle from "@/components/default/blog/BlogPageTitle";
 
-export default function AboutPage() {
+export default function BlogPage() {
   return (
     <main className="main">
-    <Header/>
+      <Header />
       <BlogPageTitle />
-      {/* <AboutSection />
-      <StatsSection />
-      <SkillsSection />
-      <InterestsSection />
-      <TestimonialsSection /> */}
-      <Footer/>
-    <ScrollTop />
+      <BlogSection />
+      <Footer />
+      <ScrollTop />
     </main>
   );
 }
