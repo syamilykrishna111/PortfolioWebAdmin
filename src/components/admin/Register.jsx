@@ -76,26 +76,12 @@ const Register = () => {
 
         <div className="auth-visual">
           <img
-            src="/images/dasher-ui-bootstrap-5.jpg"
+            src="../../assets/images/png/dasher-ui-bootstrap-5.jpg"
             alt="adminHMD dashboard interface"
           />
         </div>
 
-        <form
-          className="needs-validation"
-          noValidate
-          onSubmit={handleSubmit}
-        >
-          <div className="mb-4">
-            <p className="eyebrow mb-1">Secure Access</p>
-
-            <h1 className="h3 mb-1">Register</h1>
-
-            <p className="text-muted mb-0">
-              Create your adminHMD account.
-            </p>
-          </div>
-
+        <form className="needs-validation" noValidate onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label" htmlFor="registerName">
               Full Name
@@ -111,9 +97,7 @@ const Register = () => {
               required
             />
 
-            <div className="invalid-feedback">
-              Full name is required.
-            </div>
+            <div className="invalid-feedback">Full name is required.</div>
           </div>
 
           <div className="mb-3">
@@ -131,9 +115,7 @@ const Register = () => {
               required
             />
 
-            <div className="invalid-feedback">
-              Enter a valid email.
-            </div>
+            <div className="invalid-feedback">Enter a valid email.</div>
           </div>
 
           <div className="mb-3">
@@ -179,16 +161,13 @@ const Register = () => {
             type="submit"
             disabled={loading}
           >
-            <i
-              className="bi bi-person-plus"
-              aria-hidden="true"
-            ></i>{" "}
+            <i className="bi bi-person-plus" aria-hidden="true"></i>{" "}
             {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
 
         <div className="auth-footer">
-          Already have an account? <a href="/login">Sign In</a>
+          Already have an account? <a href="/admin/login">Sign In</a>
         </div>
       </section>
     </main>

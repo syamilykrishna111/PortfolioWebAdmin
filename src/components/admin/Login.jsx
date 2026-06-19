@@ -1,6 +1,57 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        },
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+
+        window.location.href = "/admin/dashboard";
+      } else {
+        alert(data.message);
+        console.log(data);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Login Failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="auth-body">
       <button
@@ -27,30 +78,27 @@ const Login = () => {
 
           <div className="auth-visual">
             <img
-              src="../src/assets/images/png/dasher-ui-bootstrap-5.jpg"
+              src="../../assets/images/png/dasher-ui-bootstrap-5.jpg"
               alt="adminHMD dashboard interface"
             />
           </div>
 
-          <form className="needs-validation" noValidate>
-            <div className="mb-4">
-              <p className="eyebrow mb-1">Secure Access</p>
-              <h1 className="h3 mb-1">Login</h1>
-              <p className="text-muted mb-0">
-                Sign in to your admin workspace.
-              </p>
-            </div>
-
+          <form className="needs-validation" noValidate onSubmit={handleSubmit}>
             <div className="mb-3">
               <label className="form-label" htmlFor="loginEmail">
                 Email address
               </label>
+
               <input
                 className="form-control"
                 id="loginEmail"
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 required
               />
+
               <div className="invalid-feedback">Enter a valid email.</div>
             </div>
 
@@ -59,6 +107,7 @@ const Login = () => {
                 <label className="form-label" htmlFor="loginPassword">
                   Password
                 </label>
+
                 <a className="small fw-semibold" href="/forgot-password">
                   Forgot?
                 </a>
@@ -68,6 +117,9 @@ const Login = () => {
                 className="form-control"
                 id="loginPassword"
                 type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 minLength="6"
                 required
               />
@@ -88,18 +140,18 @@ const Login = () => {
               </label>
             </div>
 
-            <a
+            <button
               className="btn btn-primary w-100"
               type="submit"
-              href="/admin/dashboard"
+              disabled={loading}
             >
               <i className="bi bi-box-arrow-in-right" aria-hidden="true"></i>{" "}
-              Sign In
-            </a>
+              {loading ? "Signing In..." : "Sign In"}
+            </button>
           </form>
 
           <div className="auth-footer">
-            New here? <a href="/register">Create an account</a>
+            New here? <a href="/admin/register">Create an account</a>
           </div>
         </section>
       </main>
