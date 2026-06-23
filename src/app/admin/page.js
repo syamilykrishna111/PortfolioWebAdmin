@@ -11,13 +11,6 @@ export default function Home() {
   return (
     <>
       <Dashboard />
-      <Users />
-      <Pages />
-      <Blogs />
-      <Testimonials />
-      <Profile />
-      <Blocks />
-      <Settings />
     </>
   );
 }

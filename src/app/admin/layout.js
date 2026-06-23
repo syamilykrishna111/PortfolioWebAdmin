@@ -12,10 +12,6 @@ export default function AdminLayout({ children }) {
     <>
       <BootstrapClient />
       {children}
-      {/* <Script
-        src="assets/admin/js/main.js"
-        strategy="afterInteractive"
-      /> */}
     </>
   );
 }

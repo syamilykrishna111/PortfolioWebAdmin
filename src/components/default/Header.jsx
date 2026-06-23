@@ -23,7 +23,6 @@ export default function Header() {
   return (
     <header id="header" className="header d-flex align-items-center fixed-top">
       <div className="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-        
         <Link href="/" className="logo d-flex align-items-center">
           <h1 className="sitename">Personal</h1>
         </Link>
@@ -74,9 +73,9 @@ export default function Header() {
           </ul>
         </nav>
 
-        <Link href="/admin" className="btn btn-primary">
+        <a href="/admin" className="btn btn-primary">
           Login
-        </Link>
+        </a>
 
         <i
           className={`mobile-nav-toggle d-xl-none bi ${
